@@ -22,6 +22,7 @@ def import_cleaned_data():
 
 
 def model_data(df: pd.DataFrame):
+    # @todo -> shuffle data or not? We do have a time series data in the beginning, but we remove the time series data
     df = df.sample(frac=0.1, random_state=42)
     print("AFTER SHUFFLE")
     # split data into train and test set using sklearn
