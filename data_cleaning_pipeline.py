@@ -110,6 +110,9 @@ def _feature_duration(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+# velocity is not a feature!!! -> it is calculated from our target attribute
+# we should not use it as a feature
+# I leave it here for reminding us of this learning
 def _feature_velocity(df: pd.DataFrame) -> pd.DataFrame:
     df["velocity"] = df["trip_distance"] / (
                 (df["tpep_dropoff_datetime"] - df["tpep_pickup_datetime"]).dt.seconds / 3600)
@@ -129,7 +132,6 @@ def _preprocessing_pipeline(df: pd.DataFrame, year, month) -> pd.DataFrame:
     df = _feature_holidays(df)
     df = _feature_timecols(df, "pickup", "tpep_pickup_datetime")
     df = _feature_timecols(df, "dropoff", "tpep_dropoff_datetime")
-    df = _feature_velocity(df)
     df = _feature_duration(df)
     return df
 

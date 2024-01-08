@@ -35,9 +35,15 @@ def model_data(df: pd.DataFrame):
     model = RandomForestRegressor(verbose=1)
     model.fit(X_train, y_train)
 
+    # save model
     with open("model.pkl", "wb") as f:
         pickle.dump(model, f)
 
+    # return model
+    return model, X_train, y_train, X_test, y_test
+
+
+def evaluate_model(model, X_train, y_train, X_test, y_test):
     # evaluate model
     y_pred = model.predict(X_test)
     y_train_pred = model.predict(X_train)
@@ -62,4 +68,7 @@ if __name__ == "__main__":
     #exit(0)
 
     print(f"Dataframe shape: {df.shape}")
-    model_data(df)
+    model, X_train, y_train, X_test, y_test = model_data(df)
+
+    # evaluate model
+    evaluate_model(model, X_train, y_train, X_test, y_test)
