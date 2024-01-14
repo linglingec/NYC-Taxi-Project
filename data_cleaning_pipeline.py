@@ -76,11 +76,11 @@ def _feature_holidays(df: pd.DataFrame) -> pd.DataFrame:
     american_holidays = calendar().holidays()
 
     df["pickup_is_holiday"] = df["tpep_pickup_datetime"].dt.date.isin(american_holidays)
-    df["dropoff_is_holiday"] = df["tpep_dropoff_datetime"].dt.date.isin(american_holidays)
     return df
 
 
 def _feature_timecols(df: pd.DataFrame, prefix: str, column_name: str) -> pd.DataFrame:
+    # year -> unnecessary for only one year
     df[f"{prefix}_year"] = df[column_name].dt.year
     df[f"{prefix}_month"] = df[column_name].dt.month
     df[f"{prefix}_day"] = df[column_name].dt.day
@@ -112,7 +112,7 @@ def _feature_duration(df: pd.DataFrame) -> pd.DataFrame:
 
 # velocity is not a feature!!! -> it is calculated from our target attribute
 # we should not use it as a feature
-# I leave it here for reminding us of this learning
+# I leave it here for reminding me of this learning
 def _feature_velocity(df: pd.DataFrame) -> pd.DataFrame:
     df["velocity"] = df["trip_distance"] / (
                 (df["tpep_dropoff_datetime"] - df["tpep_pickup_datetime"]).dt.seconds / 3600)
@@ -131,7 +131,6 @@ def _preprocessing_pipeline(df: pd.DataFrame, year, month) -> pd.DataFrame:
 
     df = _feature_holidays(df)
     df = _feature_timecols(df, "pickup", "tpep_pickup_datetime")
-    df = _feature_timecols(df, "dropoff", "tpep_dropoff_datetime")
     df = _feature_duration(df)
     return df
 
