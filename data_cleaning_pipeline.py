@@ -176,13 +176,5 @@ def transform_data():
     df.to_parquet(OUTPUT_PATH / f"cleaned_data_all.parquet", index=False)
 
 
-
-
-
-
-def preprocessing_pipeline():
-    pass
-
-
 if __name__ == '__main__':
     transform_data()
